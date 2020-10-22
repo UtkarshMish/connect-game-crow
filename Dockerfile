@@ -12,5 +12,4 @@ ADD . /app
 WORKDIR /app
 WORKDIR /app/build
 RUN cmake ..
-RUN make
-CMD [ "./say_hello" ]
+RUN makeCMD [ "./game-app" ]
