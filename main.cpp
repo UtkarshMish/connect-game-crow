@@ -1,35 +1,53 @@
-#include "req_utils.h"
+#include "file_utils.h"
 
+void sendFile(response &res, string filename)
+{
+  const auto file = new ServerFile(filename);
+  ifstream in(("../public/" + file->getLocation()), ifstream::in);
+  if (in)
+  {
+    ostringstream contents;
+    contents << in.rdbuf();
+    in.close();
+    res.set_header("Content-Type", file->getContentType());
+    res.write(contents.str());
+  }
+  else
+  {
+    res.write("Not found");
+  }
+  res.end();
+}
 int main(int argc, char *argv[])
 {
   crow::SimpleApp app;
   CROW_ROUTE(app, "/")
   ([](const request &req, response &res) {
-    sendHTML(res, "index");
+    sendFile(res, "index.html");
   });
 
   CROW_ROUTE(app, "/<string>")
   ([](const request &req, response &res, string name = NULL) {
-    sendHTML(res, "index");
+    sendFile(res, "index.html");
   });
 
   CROW_ROUTE(app, "/js/<string>")
   ([](const request &req, response &res, string filename) {
-    sendJavaScript(res, filename);
+    sendFile(res, filename);
   });
 
   CROW_ROUTE(app, "/image/<string>")
   ([](const request &req, response &res, string filename) {
-    sendPNG(res, filename);
+    sendFile(res, filename);
   });
 
   CROW_ROUTE(app, "/style/<string>")
   ([](const request &req, response &res, string filename) {
-    sendStyle(res, filename);
+    sendFile(res, filename);
   });
   CROW_ROUTE(app, "/sound/<string>")
   ([](const request &req, response &res, string filename) {
-    sendSound(res, filename);
+    sendFile(res, filename);
   });
 
   char *port = getenv("PORT");
