@@ -5,7 +5,7 @@ using namespace crow;
 
 #define SAY_HELLO_REQ_UTILS_H
 
-void SendFile(response &res, string contentType, string filename)
+void sendFile(response &res, string contentType, string filename)
 {
     ifstream in(("../public/" + filename), ifstream::in);
     if (in)
@@ -24,22 +24,22 @@ void SendFile(response &res, string contentType, string filename)
 }
 void sendJavaScript(response &res, string filename)
 {
-    SendFile(res, "text/javascript", "js/" + filename);
+    sendFile(res, "text/javascript", "js/" + filename);
 }
 void sendHTML(response &res, string filename)
 {
-    SendFile(res, "text/html", filename + ".html");
+    sendFile(res, "text/html", filename + ".html");
 }
 void sendPNG(response &res, string filename)
 {
-    SendFile(res, "image/png", "image/" + filename);
+    sendFile(res, "image/png", "image/" + filename);
 }
 void sendStyle(response &res, string filename)
 {
-    SendFile(res, "text/css", "style/" + filename);
+    sendFile(res, "text/css", "style/" + filename);
 }
 void sendSound(response &res, string filename)
 {
-    SendFile(res, "audio/mpeg3", "sound/" + filename);
+    sendFile(res, "audio/mpeg3", "sound/" + filename);
 }
 #endif //SAY_HELLO_REQ_UTILS_H

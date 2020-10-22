@@ -1,13 +1,8 @@
 #include "req_utils.h"
-using namespace std;
-using namespace crow;
-
-
 
 int main(int argc, char *argv[])
 {
   crow::SimpleApp app;
-  crow::mustache::set_base("./public/");
   CROW_ROUTE(app, "/")
   ([](const request &req, response &res) {
     sendHTML(res, "index");
@@ -32,10 +27,10 @@ int main(int argc, char *argv[])
   ([](const request &req, response &res, string filename) {
     sendStyle(res, filename);
   });
-    CROW_ROUTE(app, "/sound/<string>")
-            ([](const request &req, response &res, string filename) {
-                sendSound(res, filename);
-            });
+  CROW_ROUTE(app, "/sound/<string>")
+  ([](const request &req, response &res, string filename) {
+    sendSound(res, filename);
+  });
 
   char *port = getenv("PORT");
   uint16_t iPort = static_cast<uint16_t>(port != NULL) ? stoi(port) : 8080;
