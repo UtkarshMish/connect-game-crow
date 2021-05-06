@@ -2,7 +2,7 @@
 
 void sendFile(response &res, string filename)
 {
-  const auto file = new ServerFile(filename);
+  const auto file = new ServerFile(std::move(filename));
   ifstream in(("../public/" + file->getLocation()), ifstream::in);
   if (in)
   {
@@ -27,31 +27,31 @@ int main(int argc, char *argv[])
   });
 
   CROW_ROUTE(app, "/<string>")
-  ([](const request &req, response &res, string name = NULL) {
+  ([](const request &req, response &res, const string& name="") {
     sendFile(res, "index.html");
   });
 
   CROW_ROUTE(app, "/js/<string>")
   ([](const request &req, response &res, string filename) {
-    sendFile(res, filename);
+    sendFile(res, std::move(filename));
   });
 
   CROW_ROUTE(app, "/image/<string>")
   ([](const request &req, response &res, string filename) {
-    sendFile(res, filename);
+    sendFile(res, std::move(filename));
   });
 
   CROW_ROUTE(app, "/style/<string>")
   ([](const request &req, response &res, string filename) {
-    sendFile(res, filename);
+    sendFile(res, std::move(filename));
   });
   CROW_ROUTE(app, "/sound/<string>")
   ([](const request &req, response &res, string filename) {
-    sendFile(res, filename);
+    sendFile(res, std::move(filename));
   });
 
   char *port = getenv("PORT");
-  uint16_t iPort = static_cast<uint16_t>(port != NULL) ? stoi(port) : 8080;
+  uint16_t iPort = static_cast<uint16_t>(port != nullptr) ? stoi(port) : 8080;
   cout << "PORT = " << port << endl;
   app.port(iPort).multithreaded().run();
 }

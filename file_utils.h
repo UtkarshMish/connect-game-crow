@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "crow_all.h"
 #include "unordered_map"
 
@@ -60,10 +62,10 @@ private:
     }
 
 public:
-    ServerFile(string filename)
+    explicit ServerFile(string filename)
     {
 
-        this->file = filename;
+        this->file = std::move(filename);
         this->extension = this->findExtension();
         this->contentType = this->findContentType();
         this->location = this->findLocation();

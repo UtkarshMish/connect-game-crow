@@ -3,7 +3,7 @@
 A Connect Three game PWA made using Svelte as Frontend
 and Crow Microframework for C++ as Backend.<br>
 
-## Rrequirements -
+## Requirements -
 
 1. Docker or Linux Environment.<br/>
 2. Can be run on Windows using cygwin (install cmake automake libboost g++).
